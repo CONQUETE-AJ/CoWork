@@ -1,7 +1,7 @@
 import { ListCheckbox, Plus } from '@icon-park/react';
-import { IconMoonFill, IconPoweroff, IconSettings, IconSunFill, IconUser } from '@arco-design/web-react/icon';
+import { IconLeft, IconPoweroff, IconSettings, IconUser } from '@arco-design/web-react/icon';
 import classNames from 'classnames';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { iconColors } from './theme/colors';
@@ -10,7 +10,6 @@ import { usePreviewContext } from './pages/conversation/preview/context/PreviewC
 import { cleanupSiderTooltips, getSiderTooltipProps } from './utils/siderTooltip';
 import { useLayoutContext } from './context/LayoutContext';
 import { blurActiveElement } from './utils/focus';
-import { useThemeContext } from './context/ThemeContext';
 import { useAuth } from './context/AuthContext';
 
 const WorkspaceGroupedHistory = React.lazy(() => import('./pages/conversation/WorkspaceGroupedHistory'));
@@ -24,22 +23,35 @@ interface SiderProps {
 const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
   const layout = useLayoutContext();
   const isMobile = layout?.isMobile ?? false;
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
 
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { closePreview } = usePreviewContext();
-  const { theme, setTheme } = useThemeContext();
   const { user, logout } = useAuth();
   const [isBatchMode, setIsBatchMode] = useState(false);
   const isSettings = pathname.startsWith('/settings');
   const profileDisplayName = user?.username || t('common.profile');
+  const lastNonSettingsPathRef = useRef('/guid');
+
+  useEffect(() => {
+    if (!pathname.startsWith('/settings')) {
+      lastNonSettingsPathRef.current = `${pathname}${search}${hash}`;
+    }
+  }, [hash, pathname, search]);
 
   const handleToggleBatchMode = () => {
     setIsBatchMode((prev) => !prev);
   };
-  const handleQuickThemeToggle = () => {
-    void setTheme(theme === 'dark' ? 'light' : 'dark');
+  const handleBackToChat = () => {
+    cleanupSiderTooltips();
+    blurActiveElement();
+    Promise.resolve(navigate(lastNonSettingsPathRef.current || '/guid')).catch((error) => {
+      console.error('Navigation failed:', error);
+    });
+    if (onSessionClick) {
+      onSessionClick();
+    }
   };
   const handleProfileMenuClick = (key: string) => {
     cleanupSiderTooltips();
@@ -128,12 +140,10 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
       <div className='shrink-0 sider-footer mt-auto pt-8px'>
         <div className='flex flex-col gap-8px'>
           {isSettings && (
-            <Tooltip {...siderTooltipProps} content={theme === 'dark' ? t('settings.lightMode') : t('settings.darkMode')} position='right'>
-              <div onClick={handleQuickThemeToggle} className={classNames('flex items-center justify-start gap-10px px-12px py-8px rd-0.5rem cursor-pointer transition-colors hover:bg-hover active:bg-fill-2', isMobile && 'sider-footer-btn-mobile')} aria-label={theme === 'dark' ? t('settings.lightMode') : t('settings.darkMode')}>
-                {theme === 'dark' ? <IconSunFill style={{ fontSize: 18, color: 'rgb(var(--primary-6))' }} /> : <IconMoonFill style={{ fontSize: 18, color: 'rgb(var(--primary-6))' }} />}
-                <span className='collapsed-hidden text-t-primary'>
-                  {t('settings.theme')} · {theme === 'dark' ? t('settings.darkMode') : t('settings.lightMode')}
-                </span>
+            <Tooltip {...siderTooltipProps} content={t('common.back')} position='right'>
+              <div onClick={handleBackToChat} className={classNames('flex items-center justify-start gap-10px px-12px py-8px rd-0.5rem cursor-pointer transition-colors hover:bg-hover active:bg-fill-2', isMobile && 'sider-footer-btn-mobile')} aria-label={t('common.back')}>
+                <IconLeft style={{ fontSize: 18, color: 'rgb(var(--primary-6))' }} />
+                <span className='collapsed-hidden text-t-primary'>{t('common.back')}</span>
               </div>
             </Tooltip>
           )}
