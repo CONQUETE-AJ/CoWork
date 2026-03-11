@@ -75,7 +75,7 @@ i18n
 async function initLanguage(): Promise<void> {
   try {
     const savedLanguage = await ConfigStorage.get('language');
-    const language = savedLanguage || i18n.language || DEFAULT_LANGUAGE;
+    const language = savedLanguage || DEFAULT_LANGUAGE;
     await ensureAndSwitch(i18n, language, loadLocaleModules);
   } catch (error) {
     console.error('Failed to initialize language:', error);
