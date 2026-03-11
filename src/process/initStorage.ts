@@ -681,8 +681,10 @@ const initStorage = async () => {
 
     // 更新或添加内置助手配置
     // Update or add built-in assistant configurations
-    const updatedAgents = [...existingAgents];
-    let hasChanges = false;
+    // Also remove stale builtin assistants that are no longer shipped.
+    const builtinAssistantIds = new Set(builtinAssistants.map((assistant) => assistant.id));
+    const updatedAgents = existingAgents.filter((agent: AcpBackendConfig) => !(agent.isBuiltin && !builtinAssistantIds.has(agent.id)));
+    let hasChanges = updatedAgents.length !== existingAgents.length;
 
     for (const builtin of builtinAssistants) {
       const index = updatedAgents.findIndex((a: AcpBackendConfig) => a.id === builtin.id);
