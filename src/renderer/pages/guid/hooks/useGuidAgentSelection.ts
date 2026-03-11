@@ -7,7 +7,6 @@
 import { ipcBridge } from '@/common';
 import { ASSISTANT_PRESETS } from '@/common/presets/assistantPresets';
 import { DEFAULT_CODEX_MODELS } from '@/common/codex/codexModels';
-import type { IProvider } from '@/common/storage';
 import { ConfigStorage } from '@/common/storage';
 import type { AcpBackend, AcpBackendConfig, AcpModelInfo, AvailableAgent, EffectiveAgentInfo, PresetAgentType } from '../types';
 import { getAgentModes } from '@/renderer/constants/agentModes';
@@ -70,16 +69,14 @@ export type GuidAgentSelectionResult = {
 };
 
 type UseGuidAgentSelectionOptions = {
-  modelList: IProvider[];
-  isGoogleAuth: boolean;
   localeKey: string;
 };
 
 /**
  * Hook that manages agent selection, availability, and preset assistant logic.
  */
-export const useGuidAgentSelection = ({ modelList, isGoogleAuth, localeKey }: UseGuidAgentSelectionOptions): GuidAgentSelectionResult => {
-  const [selectedAgentKey, _setSelectedAgentKey] = useState<string>('gemini');
+export const useGuidAgentSelection = ({ localeKey }: UseGuidAgentSelectionOptions): GuidAgentSelectionResult => {
+  const [selectedAgentKey, _setSelectedAgentKey] = useState<string>('opencode');
   const [availableAgents, setAvailableAgents] = useState<AvailableAgent[]>();
   const [customAgents, setCustomAgents] = useState<AcpBackendConfig[]>([]);
   const [selectedMode, _setSelectedMode] = useState<string>('default');
@@ -177,7 +174,7 @@ export const useGuidAgentSelection = ({ modelList, isGoogleAuth, localeKey }: Us
   const { data: availableAgentsData } = useSWR('acp.agents.available', async () => {
     const result = await ipcBridge.acpConversation.getAvailableAgents.invoke();
     if (result.success) {
-      return result.data.filter((agent) => !(agent.backend === 'gemini' && agent.cliPath));
+      return result.data.filter((agent) => agent.backend === 'opencode');
     }
     return [];
   });
@@ -187,6 +184,13 @@ export const useGuidAgentSelection = ({ modelList, isGoogleAuth, localeKey }: Us
       setAvailableAgents(availableAgentsData);
     }
   }, [availableAgentsData]);
+
+  useEffect(() => {
+    if (availableAgents === undefined) return;
+    if (!selectedAgentKey.startsWith('custom:') && selectedAgentKey !== 'opencode') {
+      _setSelectedAgentKey('opencode');
+    }
+  }, [availableAgents, selectedAgentKey]);
 
   // Load last selected agent
   useEffect(() => {
@@ -484,10 +488,10 @@ export const useGuidAgentSelection = ({ modelList, isGoogleAuth, localeKey }: Us
 
   const resolvePresetAgentType = useCallback(
     (agentInfo: { backend: AcpBackend; customAgentId?: string } | undefined): string => {
-      if (!agentInfo) return 'gemini';
+      if (!agentInfo) return 'opencode';
       if (agentInfo.backend !== 'custom') return agentInfo.backend as string;
       const customAgent = customAgents.find((agent) => agent.id === agentInfo.customAgentId);
-      return customAgent?.presetAgentType || 'gemini';
+      return customAgent?.presetAgentType || 'opencode';
     },
     [customAgents]
   );
@@ -505,16 +509,14 @@ export const useGuidAgentSelection = ({ modelList, isGoogleAuth, localeKey }: Us
   // --- Availability checks ---
   const isMainAgentAvailable = useCallback(
     (agentType: string): boolean => {
-      if (agentType === 'gemini') {
-        return isGoogleAuth || (modelList != null && modelList.length > 0);
-      }
-      return availableAgents?.some((agent) => agent.backend === agentType) ?? false;
+      if (agentType !== 'opencode') return false;
+      return availableAgents?.some((agent) => agent.backend === 'opencode') ?? false;
     },
-    [modelList, availableAgents, isGoogleAuth]
+    [availableAgents]
   );
 
   const getAvailableFallbackAgent = useCallback((): string | null => {
-    const fallbackOrder: PresetAgentType[] = ['gemini', 'claude', 'qwen', 'codex', 'codebuddy', 'opencode'];
+    const fallbackOrder: PresetAgentType[] = ['opencode'];
     for (const agentType of fallbackOrder) {
       if (isMainAgentAvailable(agentType)) {
         return agentType;

@@ -1,7 +1,7 @@
 {
   "agentFallbackNotice": "{{original}} n'est pas disponible, utilisez {{fallback}} à la place.",
-  "noAgentAvailable": "Aucun agent principal n'est disponible. Veuillez vous connecter à Google ou installer Claude/Codex CLI. Aller dans les paramètres ?",
-  "noAgentAvailableShort": "Aucun agent principal disponible. Cliquez pour configurer.",
+  "noAgentAvailable": "OpenCode CLI est requis mais introuvable. Installez OpenCode puis relancez l'application.",
+  "noAgentAvailableShort": "OpenCode CLI introuvable.",
   "agentTabAutoSwitch": "Modèle non compatible avec Gemini, commuté automatiquement sur {{fallback}}",
   "autoSwitchToAgent": "Gemini n'est pas configuré, commutation automatique sur {{agent}}",
   "autoSwitchedAgent": "{{from}} n'est pas disponible, basculé vers {{to}}",

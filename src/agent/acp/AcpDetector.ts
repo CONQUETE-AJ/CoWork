@@ -32,6 +32,11 @@ interface DetectedAgent {
 class AcpDetector {
   private detectedAgents: DetectedAgent[] = [];
   private isDetected = false;
+  private readonly enforcedBackend: AcpBackendAll = 'opencode';
+
+  private filterEnforcedAgents(agents: DetectedAgent[]): DetectedAgent[] {
+    return agents.filter((agent) => agent.backend === this.enforcedBackend);
+  }
 
   /**
    * 将扩展贡献的 ACP adapter 添加到检测列表（即开即用，不落盘）
@@ -208,36 +213,33 @@ class AcpDetector {
     // Check for custom agents configuration
     await this.addCustomAgentsToList(detected);
 
-    this.detectedAgents = detected;
+    const enforcedDetected = this.filterEnforcedAgents(detected);
+    this.detectedAgents = enforcedDetected;
     this.isDetected = true;
 
     const elapsed = Date.now() - startTime;
-    console.log(`[ACP] Detection completed in ${elapsed}ms, found ${detected.length} agents`);
+    console.log(`[ACP] Detection completed in ${elapsed}ms, found ${enforcedDetected.length} allowed agents`);
   }
 
   /**
    * 获取检测结果
    */
   getDetectedAgents(): DetectedAgent[] {
-    return this.detectedAgents;
+    return this.filterEnforcedAgents(this.detectedAgents);
   }
 
   /**
    * 是否有可用的ACP工具
    */
   hasAgents(): boolean {
-    return this.detectedAgents.length > 0;
+    return this.getDetectedAgents().length > 0;
   }
 
   /**
    * Refresh custom agents detection only (called when config changes)
    */
   async refreshCustomAgents(): Promise<void> {
-    // Remove existing non-extension custom agents if present
-    this.detectedAgents = this.detectedAgents.filter((agent) => !(agent.backend === 'custom' && !agent.isExtension));
-
-    // Re-add custom agents with current config
-    await this.addCustomAgentsToList(this.detectedAgents);
+    this.detectedAgents = this.filterEnforcedAgents(this.detectedAgents);
   }
 }
 

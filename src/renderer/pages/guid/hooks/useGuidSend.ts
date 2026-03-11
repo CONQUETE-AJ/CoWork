@@ -74,6 +74,11 @@ export const useGuidSend = (deps: GuidSendDeps): GuidSendResult => {
     const isCustomWorkspace = !!dir;
     const finalWorkspace = dir || '';
 
+    if (!isMainAgentAvailable('opencode')) {
+      Message.error(t('guid.noAgentAvailable'));
+      return;
+    }
+
     const agentInfo = selectedAgentInfo;
     const isPreset = isPresetAgent;
 
@@ -341,7 +346,7 @@ export const useGuidSend = (deps: GuidSendDeps): GuidSendResult => {
   }, [handleSend, setLoading, setInput, setMentionOpen, setMentionQuery, setMentionSelectorOpen, setMentionActiveIndex, setFiles, setDir]);
 
   // Calculate button disabled state
-  const isButtonDisabled = !input.trim() || ((((!selectedAgent || selectedAgent === 'gemini') && !isPresetAgent) || (isPresetAgent && currentEffectiveAgentInfo.agentType === 'gemini' && currentEffectiveAgentInfo.isAvailable)) && !currentModel && isGoogleAuth);
+  const isButtonDisabled = !input.trim() || !isMainAgentAvailable('opencode') || ((((!selectedAgent || selectedAgent === 'gemini') && !isPresetAgent) || (isPresetAgent && currentEffectiveAgentInfo.agentType === 'gemini' && currentEffectiveAgentInfo.isAvailable)) && !currentModel && isGoogleAuth);
 
   return {
     handleSend,

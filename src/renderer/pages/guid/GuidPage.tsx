@@ -40,8 +40,6 @@ const GuidPage: React.FC = () => {
   const modelSelection = useGuidModelSelection();
 
   const agentSelection = useGuidAgentSelection({
-    modelList: modelSelection.modelList,
-    isGoogleAuth: modelSelection.isGoogleAuth,
     localeKey,
   });
 
@@ -201,6 +199,7 @@ const GuidPage: React.FC = () => {
 
   // Typewriter placeholder
   const typewriterPlaceholder = useTypewriterPlaceholder(t('conversation.welcome.placeholder'));
+  const isOpencodeAvailable = (agentSelection.availableAgents || []).some((agent) => agent.backend === 'opencode');
 
   // Determine if model selector should be in Gemini mode
   const isGeminiMode = (agentSelection.selectedAgent === 'gemini' && !agentSelection.isPresetAgent) || (agentSelection.isPresetAgent && agentSelection.currentEffectiveAgentInfo.agentType === 'gemini' && agentSelection.currentEffectiveAgentInfo.isAvailable);
@@ -226,7 +225,7 @@ const GuidPage: React.FC = () => {
       selectedAgentInfo={agentSelection.selectedAgentInfo}
       customAgents={agentSelection.customAgents}
       localeKey={localeKey}
-      onClosePresetTag={() => agentSelection.setSelectedAgentKey('gemini')}
+      onClosePresetTag={() => agentSelection.setSelectedAgentKey('opencode')}
       loading={guidInput.loading}
       isButtonDisabled={send.isButtonDisabled}
       onSend={() => {
@@ -242,6 +241,18 @@ const GuidPage: React.FC = () => {
       <div ref={guidContainerRef} className={styles.guidContainer}>
         <div className={styles.guidLayout}>
           <p className='text-2xl font-semibold mb-6 text-0 text-center'>{t('conversation.welcome.title')}</p>
+          {agentSelection.availableAgents !== undefined && !isOpencodeAvailable && (
+            <div
+              className='mb-12px px-12px py-8px rd-8px text-12px'
+              style={{
+                background: 'rgb(var(--danger-1))',
+                border: '1px solid rgb(var(--danger-3))',
+                color: 'rgb(var(--danger-6))',
+              }}
+            >
+              {t('guid.noAgentAvailable')}
+            </div>
+          )}
 
           {agentSelection.availableAgents === undefined ? <AgentPillBarSkeleton /> : agentSelection.availableAgents.length > 0 ? <AgentPillBar availableAgents={agentSelection.availableAgents} selectedAgentKey={agentSelection.selectedAgentKey} getAgentKey={agentSelection.getAgentKey} onSelectAgent={handleSelectAgentFromPillBar} /> : null}
 
@@ -271,7 +282,6 @@ const GuidPage: React.FC = () => {
 
           {agentSelection.availableAgents === undefined ? <AssistantsSkeleton /> : <AssistantSelectionArea isPresetAgent={agentSelection.isPresetAgent} selectedAgentInfo={agentSelection.selectedAgentInfo} customAgents={agentSelection.customAgents} localeKey={localeKey} currentEffectiveAgentInfo={agentSelection.currentEffectiveAgentInfo} onSelectAssistant={handleSelectAssistant} onSetInput={guidInput.setInput} onFocusInput={guidInput.handleTextareaFocus} />}
         </div>
-
       </div>
     </ConfigProvider>
   );
