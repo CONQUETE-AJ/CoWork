@@ -1,0 +1,43 @@
+{
+  "scheduledTasks": "Tâches planifiées",
+  "taskCount": "{{count}} tâche(s)",
+  "schedule": "Calendrier",
+  "nextRun": "Prochaine exécution",
+  "lastRun": "Dernière course",
+  "lastError": "Erreur",
+  "message": "Message",
+  "goToConversation": "Aller à la conversation",
+  "status": {
+    "active": "Actif",
+    "paused": "En pause",
+    "error": "Erreur",
+    "unread": "Nouvelle exécution",
+    "unconfigured": "Aucune tâche planifiée",
+    "unconfiguredHint": "Aucune tâche planifiée pour l'instant. Créez-en un avec votre agent !",
+    "createNow": "Créer maintenant",
+    "defaultPrompt": "Chaque jour à 10h, recherchez les dernières actualités sur l'IA, résumez et générez un rapport d'analyse."
+  },
+  "actions": {
+    "goTo": "Afficher le chat",
+    "pause": "Pause",
+    "resume": "CV",
+    "delete": "Supprimer"
+  },
+  "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette tâche planifiée ?",
+  "deleteSuccess": "Tâche supprimée",
+  "pauseSuccess": "Tâche suspendue",
+  "resumeSuccess": "Tâche reprise",
+  "drawer.title": "Détails de la tâche planifiée",
+  "drawer.name": "Nom",
+  "drawer.namePlaceholder": "Entrez le nom de la tâche",
+  "drawer.taskStatus": "Statut de la tâche",
+  "drawer.enabled": "Activé",
+  "drawer.disabled": "Désactivé",
+  "drawer.command": "Commande",
+  "drawer.commandPlaceholder": "Entrez la commande à exécuter",
+  "drawer.schedule": "Calendrier",
+  "drawer.nextRun": "Prochaine exécution",
+  "drawer.save": "Sauvegarder",
+  "drawer.saveSuccess": "Enregistré avec succès",
+  "message.badge": "Programmé"
+}

@@ -108,7 +108,7 @@ function buildPresetInfo(presetId: string, locale: string): PresetAssistantInfo 
  * Build assistant info from a custom agent config
  */
 function buildCustomAgentInfo(customAgent: { name?: string; nameI18n?: Record<string, string>; avatar?: string }, locale: string): PresetAssistantInfo {
-  const localeKey = locale.startsWith('zh') ? 'zh-CN' : 'en-US';
+  const localeKey = locale.startsWith('fr') ? 'fr-FR' : 'en-US';
   const normalized = normalizeAvatar(typeof customAgent.avatar === 'string' ? customAgent.avatar : '');
 
   return {
@@ -168,7 +168,7 @@ export function usePresetAssistantInfo(conversation: TChatConversation | undefin
       const extAssistant = extensionAssistants.find((a) => a.id === presetId || a.id === `ext-${presetId}`);
       if (extAssistant) {
         const locale = i18n.language || 'en-US';
-        const localeKey = locale.startsWith('zh') ? 'zh-CN' : 'en-US';
+        const localeKey = locale.startsWith('fr') ? 'fr-FR' : 'en-US';
         const nameI18n = extAssistant.nameI18n as Record<string, string> | undefined;
         const name = nameI18n?.[localeKey] || nameI18n?.[locale] || (typeof extAssistant.name === 'string' ? extAssistant.name : String(presetId));
         const avatar = typeof extAssistant.avatar === 'string' ? extAssistant.avatar : '';

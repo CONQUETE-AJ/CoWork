@@ -1,0 +1,30 @@
+{
+  "health": {
+    "detectedError": "Erreur détectée avec l'agent actuel ({{agent}})",
+    "autoSwitching": ". Le système tentera de basculer automatiquement.",
+    "evaluating": "Évaluation de la latence du réseau et de la disponibilité des modèles...",
+    "checking": "Vérification du point de terminaison {{agent}}...",
+    "foundBest": "Trouvé la meilleure alternative",
+    "recommendSwitch": "Recommandé",
+    "available": "Disponible",
+    "lowLatency": "Faible latence",
+    "mediumLatency": "Latence moyenne",
+    "highLatency": "Latence élevée",
+    "bestMatch": "Meilleure correspondance",
+    "noAvailable": "Aucun agent disponible dans l'environnement actuel",
+    "checkConfig": "Veuillez vérifier la configuration ou réessayer plus tard"
+  },
+  "setup": {
+    "connectionError": "Erreur de connexion",
+    "notConfigured": "{{agent}} n'est pas configuré",
+    "authRequired": "Une authentification ou une clé API est requise pour utiliser cet agent.",
+    "findingAlternatives": "Trouver des alternatives disponibles...",
+    "checkingAgent": "Vérification de {{agent}}...",
+    "alternativesFound": "{{count}} alternatives disponibles trouvées",
+    "autoSwitching": "Passage automatique au meilleur agent disponible...",
+    "configError": "Erreur de configuration. Veuillez vérifier vos paramètres ou sélectionner une alternative :",
+    "noAlternatives": "Aucun agent disponible trouvé",
+    "configureFirst": "Veuillez d'abord configurer un agent dans Paramètres.",
+    "switching": "Agent de commutation..."
+  }
+}

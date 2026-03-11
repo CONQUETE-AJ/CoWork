@@ -9,11 +9,7 @@ import { DEFAULT_LANGUAGE, normalizeLanguageCode, mergeWithFallback, ensureAndSw
 
 // Static imports for all locales to ensure packaged app can always switch language.
 import enUS from './locales/en-US/index';
-import zhCN from './locales/zh-CN/index';
-import jaJP from './locales/ja-JP/index';
-import zhTW from './locales/zh-TW/index';
-import koKR from './locales/ko-KR/index';
-import trTR from './locales/tr-TR/index';
+import frFR from './locales/fr-FR/index';
 
 export type { I18nKey, I18nModule } from './i18n-keys';
 
@@ -25,11 +21,7 @@ export const supportedLanguages = i18nConfig.supportedLanguages;
 
 const localeData: LocaleData = {
   'en-US': enUS,
-  'zh-CN': zhCN,
-  'ja-JP': jaJP,
-  'zh-TW': zhTW,
-  'ko-KR': koKR,
-  'tr-TR': trTR,
+  'fr-FR': frFR,
 };
 
 const fallbackLocale = localeData[DEFAULT_LANGUAGE] ?? {};
