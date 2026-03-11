@@ -10,6 +10,7 @@
   "attach": "Attach",
   "workspace": "Workspace",
   "settings": "Settings",
+  "profile": "Profile",
   "system": "System",
   "about": "About Us",
   "back": "Back to Chat",
@@ -55,6 +56,7 @@
   "forward": "Forward",
   "more": "More",
   "refresh": "Refresh",
+  "logout": "Logout",
   "tray.showWindow": "Show AionUi",
   "tray.quit": "Quit"
 }

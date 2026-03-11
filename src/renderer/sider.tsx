@@ -1,16 +1,17 @@
-import { ArrowCircleLeft, ListCheckbox, Plus, SettingTwo } from '@icon-park/react';
-import { IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
+import { ListCheckbox, Plus } from '@icon-park/react';
+import { IconMoonFill, IconPoweroff, IconSettings, IconSunFill, IconUser } from '@arco-design/web-react/icon';
 import classNames from 'classnames';
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { iconColors } from './theme/colors';
-import { Tooltip } from '@arco-design/web-react';
+import { Dropdown, Menu, Tooltip } from '@arco-design/web-react';
 import { usePreviewContext } from './pages/conversation/preview/context/PreviewContext';
 import { cleanupSiderTooltips, getSiderTooltipProps } from './utils/siderTooltip';
 import { useLayoutContext } from './context/LayoutContext';
 import { blurActiveElement } from './utils/focus';
 import { useThemeContext } from './context/ThemeContext';
+import { useAuth } from './context/AuthContext';
 
 const WorkspaceGroupedHistory = React.lazy(() => import('./pages/conversation/WorkspaceGroupedHistory'));
 const SettingsSider = React.lazy(() => import('./pages/settings/SettingsSider'));
@@ -23,46 +24,45 @@ interface SiderProps {
 const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
   const layout = useLayoutContext();
   const isMobile = layout?.isMobile ?? false;
-  const location = useLocation();
-  const { pathname, search, hash } = location;
+  const { pathname } = useLocation();
 
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { closePreview } = usePreviewContext();
   const { theme, setTheme } = useThemeContext();
+  const { user, logout } = useAuth();
   const [isBatchMode, setIsBatchMode] = useState(false);
   const isSettings = pathname.startsWith('/settings');
-  const lastNonSettingsPathRef = useRef('/guid');
-
-  useEffect(() => {
-    if (!pathname.startsWith('/settings')) {
-      lastNonSettingsPathRef.current = `${pathname}${search}${hash}`;
-    }
-  }, [pathname, search, hash]);
-
-  const handleSettingsClick = () => {
-    cleanupSiderTooltips();
-    blurActiveElement();
-    if (isSettings) {
-      const target = lastNonSettingsPathRef.current || '/guid';
-      Promise.resolve(navigate(target)).catch((error) => {
-        console.error('Navigation failed:', error);
-      });
-    } else {
-      Promise.resolve(navigate('/settings/gemini')).catch((error) => {
-        console.error('Navigation failed:', error);
-      });
-    }
-    if (onSessionClick) {
-      onSessionClick();
-    }
-  };
+  const profileDisplayName = user?.username || t('common.profile');
 
   const handleToggleBatchMode = () => {
     setIsBatchMode((prev) => !prev);
   };
   const handleQuickThemeToggle = () => {
     void setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+  const handleProfileMenuClick = (key: string) => {
+    cleanupSiderTooltips();
+    blurActiveElement();
+    if (key === 'settings') {
+      Promise.resolve(navigate('/settings/gemini')).catch((error) => {
+        console.error('Navigation failed:', error);
+      });
+      if (onSessionClick) {
+        onSessionClick();
+      }
+      return;
+    }
+    if (key === 'logout') {
+      void logout().finally(() => {
+        Promise.resolve(navigate('/login')).catch((error) => {
+          console.error('Navigation failed:', error);
+        });
+      });
+      if (onSessionClick) {
+        onSessionClick();
+      }
+    }
   };
   const workspaceHistoryProps = {
     collapsed,
@@ -124,7 +124,7 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
           </div>
         )}
       </div>
-      {/* Footer - settings button */}
+      {/* Footer - profile menu */}
       <div className='shrink-0 sider-footer mt-auto pt-8px'>
         <div className='flex flex-col gap-8px'>
           {isSettings && (
@@ -137,18 +137,35 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
               </div>
             </Tooltip>
           )}
-          <Tooltip {...siderTooltipProps} content={isSettings ? t('common.back') : t('common.settings')} position='right'>
-            <div
-              onClick={handleSettingsClick}
-              className={classNames('flex items-center justify-start gap-10px px-12px py-8px rd-0.5rem cursor-pointer transition-colors', isMobile && 'sider-footer-btn-mobile', {
-                'bg-[rgba(var(--primary-6),0.12)] text-primary': isSettings,
-                'hover:bg-hover hover:shadow-sm active:bg-fill-2': !isSettings,
-              })}
-            >
-              {isSettings ? <ArrowCircleLeft className='flex' theme='outline' size='24' fill={iconColors.primary} /> : <SettingTwo className='flex' theme='outline' size='24' fill={iconColors.primary} />}
-              <span className='collapsed-hidden text-t-primary'>{isSettings ? t('common.back') : t('common.settings')}</span>
+          <Dropdown
+            trigger='click'
+            position='tr'
+            droplist={
+              <Menu className='min-w-160px' onClickMenuItem={handleProfileMenuClick}>
+                <Menu.Item key='settings'>
+                  <div className='flex items-center gap-8px'>
+                    <IconSettings style={{ fontSize: 14 }} />
+                    <span>{t('common.settings')}</span>
+                  </div>
+                </Menu.Item>
+                <Menu.Item key='logout'>
+                  <div className='flex items-center gap-8px text-[rgb(var(--danger-6))]'>
+                    <IconPoweroff style={{ fontSize: 14 }} />
+                    <span>{t('common.logout')}</span>
+                  </div>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <div>
+              <Tooltip {...siderTooltipProps} content={profileDisplayName} position='right'>
+                <div className={classNames('flex items-center justify-start gap-10px px-12px py-8px rd-0.5rem cursor-pointer transition-colors hover:bg-hover hover:shadow-sm active:bg-fill-2', isMobile && 'sider-footer-btn-mobile')}>
+                  <IconUser style={{ fontSize: 20, color: iconColors.primary }} />
+                  <span className='collapsed-hidden text-t-primary truncate'>{profileDisplayName}</span>
+                </div>
+              </Tooltip>
             </div>
-          </Tooltip>
+          </Dropdown>
         </div>
       </div>
     </div>
