@@ -17,7 +17,8 @@ Objectif: livrer un produit entreprise sécurisé, opérable 24/7 et ergonomique
 ## Installation
 
 ```bash
-cd /home/alex/CoWork
+git clone https://github.com/CONQUETE-AJ/CoWork.git
+cd CoWork
 bun install
 ```
 
@@ -29,19 +30,25 @@ Mode desktop (Electron):
 bun run start
 ```
 
-Mode WebUI (commande fonctionnelle actuelle):
+Mode WebUI (navigateur):
 
 ```bash
-bun run cli -- -- --webui
+bun run webui
 ```
 
 Mode WebUI distant:
 
 ```bash
-bun run cli -- -- --webui --remote
+bun run webui:remote
 ```
 
 URL WebUI par défaut: `http://localhost:25808`
+
+Commande spécifique WSL (si `bun run webui` renvoie une erreur d'option):
+
+```bash
+bun run cli -- -- --webui
+```
 
 ## Ce qui est déjà implémenté
 
