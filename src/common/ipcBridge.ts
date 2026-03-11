@@ -397,6 +397,15 @@ export interface IWebUIStatus {
   initialPassword?: string;
 }
 
+export interface IWebUIManagedUser {
+  id: string;
+  username: string;
+  role: 'admin' | 'user';
+  permissions: string[];
+  createdAt: number;
+  lastLogin?: number | null;
+}
+
 export const webui = {
   // 获取 WebUI 状态 / Get WebUI status
   getStatus: bridge.buildProvider<IBridgeResponse<IWebUIStatus>, void>('webui.get-status'),
@@ -412,6 +421,10 @@ export const webui = {
   generateQRToken: bridge.buildProvider<IBridgeResponse<{ token: string; expiresAt: number; qrUrl: string }>, void>('webui.generate-qr-token'),
   // 验证二维码 token / Verify QR token
   verifyQRToken: bridge.buildProvider<IBridgeResponse<{ sessionToken: string; username: string }>, { qrToken: string }>('webui.verify-qr-token'),
+  // 列出 WebUI 用户 / List WebUI users
+  listUsers: bridge.buildProvider<IBridgeResponse<{ users: IWebUIManagedUser[] }>, void>('webui.list-users'),
+  // 创建 WebUI 用户 / Create WebUI user
+  createUser: bridge.buildProvider<IBridgeResponse<{ user: IWebUIManagedUser; password: string }>, { username: string; password?: string }>('webui.create-user'),
   // 状态变更事件 / Status changed event
   statusChanged: bridge.buildEmitter<{ running: boolean; port?: number; localUrl?: string; networkUrl?: string }>('webui.status-changed'),
   // 密码重置结果事件（绕过 provider 返回值问题）/ Password reset result event (workaround for provider return value issue)
