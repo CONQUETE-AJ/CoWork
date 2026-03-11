@@ -2,10 +2,12 @@ import React, { Suspense } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AppLoader from './components/AppLoader';
 import { useAuth } from './context/AuthContext';
+import { hasAdminAccess } from './utils/adminAccess';
 
 const Conversation = React.lazy(() => import('./pages/conversation'));
 const Guid = React.lazy(() => import('./pages/guid'));
 const About = React.lazy(() => import('./pages/settings/About'));
+const AdminSettings = React.lazy(() => import('./pages/settings/AdminSettings'));
 const AgentSettings = React.lazy(() => import('./pages/settings/AgentSettings'));
 const DisplaySettings = React.lazy(() => import('./pages/settings/DisplaySettings'));
 const GeminiSettings = React.lazy(() => import('./pages/settings/GeminiSettings'));
@@ -37,6 +39,14 @@ const ProtectedLayout: React.FC<{ layout: React.ReactElement }> = ({ layout }) =
   return React.cloneElement(layout);
 };
 
+const AdminOnlyRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
+  const { user } = useAuth();
+  if (!hasAdminAccess(user?.username)) {
+    return <Navigate to='/settings/gemini' replace />;
+  }
+  return element;
+};
+
 const PanelRoute: React.FC<{ layout: React.ReactElement }> = ({ layout }) => {
   const { status } = useAuth();
 
@@ -53,6 +63,7 @@ const PanelRoute: React.FC<{ layout: React.ReactElement }> = ({ layout }) => {
           <Route path='/settings/agent' element={withRouteFallback(AgentSettings)} />
           <Route path='/settings/display' element={withRouteFallback(DisplaySettings)} />
           <Route path='/settings/webui' element={withRouteFallback(WebuiSettings)} />
+          <Route path='/settings/admin' element={<AdminOnlyRoute element={withRouteFallback(AdminSettings)} />} />
           <Route path='/settings/system' element={withRouteFallback(SystemSettings)} />
           <Route path='/settings/about' element={withRouteFallback(About)} />
           <Route path='/settings/tools' element={withRouteFallback(ToolsSettings)} />

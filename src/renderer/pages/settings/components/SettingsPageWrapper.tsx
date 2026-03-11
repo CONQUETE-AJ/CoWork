@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useLayoutContext } from '@/renderer/context/LayoutContext';
+import { useAuth } from '@/renderer/context/AuthContext';
 import { SettingsViewModeProvider } from '@/renderer/components/SettingsModal/settingsViewContext';
 import { isElectronDesktop, resolveExtensionAssetUrl } from '@/renderer/utils/platform';
+import { hasAdminAccess } from '@/renderer/utils/adminAccess';
 import { extensions as extensionsIpc, type IExtensionSettingsTab } from '@/common/ipcBridge';
 import { Communication, Computer, Earth, Gemini, Info, LinkCloud, Puzzle, Robot, System, Toolkit } from '@icon-park/react';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +24,8 @@ const SettingsPageWrapper: React.FC<SettingsPageWrapperProps> = ({ children, cla
   const { pathname } = useLocation();
   const { t } = useTranslation();
   const isDesktop = isElectronDesktop();
+  const { user } = useAuth();
+  const isAdmin = hasAdminAccess(user?.username);
 
   const [extensionTabs, setExtensionTabs] = useState<IExtensionSettingsTab[]>([]);
 
@@ -44,9 +48,10 @@ const SettingsPageWrapper: React.FC<SettingsPageWrapperProps> = ({ children, cla
       { id: 'tools', label: t('settings.tools'), icon: <Toolkit theme='outline' size='16' />, path: 'tools' },
       { id: 'display', label: t('settings.display'), icon: <Computer theme='outline' size='16' />, path: 'display' },
       { id: 'webui', label: t('settings.webui'), icon: isDesktop ? <Earth theme='outline' size='16' /> : <Communication theme='outline' size='16' />, path: 'webui' },
+      { id: 'admin', label: t('settings.admin', { defaultValue: 'Admin' }), icon: <System theme='outline' size='16' />, path: 'admin' },
       { id: 'system', label: t('settings.system'), icon: <System theme='outline' size='16' />, path: 'system' },
       { id: 'about', label: t('settings.about'), icon: <Info theme='outline' size='16' />, path: 'about' },
-    ];
+    ].filter((item) => item.id !== 'admin' || isAdmin);
 
     // Insert extension tabs before system (unanchored default) or at anchor position
     const result = [...builtins];
@@ -93,7 +98,7 @@ const SettingsPageWrapper: React.FC<SettingsPageWrapperProps> = ({ children, cla
     }
 
     return result;
-  }, [isDesktop, t, extensionTabs, resolveExtTabName]);
+  }, [isAdmin, isDesktop, t, extensionTabs, resolveExtTabName]);
 
   const containerClass = classNames('settings-page-wrapper w-full min-h-full box-border overflow-y-auto', isMobile ? 'px-16px py-14px' : 'px-12px md:px-40px py-32px', className);
 

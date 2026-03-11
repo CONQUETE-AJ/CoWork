@@ -5,10 +5,11 @@
  */
 
 import { networkInterfaces } from 'os';
-import type { IWebUIStatus } from '@/common/ipcBridge';
+import type { IWebUIManagedUser, IWebUIStatus } from '@/common/ipcBridge';
 import { AuthService } from '@/webserver/auth/service/AuthService';
 import { UserRepository } from '@/webserver/auth/repository/UserRepository';
 import { AUTH_CONFIG, SERVER_CONFIG } from '@/webserver/config/constants';
+import type { AuthUser } from '@/webserver/auth/repository/UserRepository';
 
 /**
  * WebUI 服务层 - 封装所有 WebUI 相关的业务逻辑
@@ -18,6 +19,7 @@ export class WebuiService {
   private static webServerFunctionsLoaded = false;
   private static _getInitialAdminPassword: (() => string | null) | null = null;
   private static _clearInitialAdminPassword: (() => void) | null = null;
+  private static readonly SYSTEM_PLACEHOLDER_USERNAME = 'system_default_user';
 
   /**
    * 加载 webserver 函数（避免循环依赖）
@@ -131,6 +133,59 @@ export class WebuiService {
       lanIP: lanIP ?? undefined,
       adminUsername: adminUser?.username ?? AUTH_CONFIG.DEFAULT_USER.USERNAME,
       initialPassword: this.getInitialAdminPassword() ?? undefined,
+    };
+  }
+
+  private static mapManagedUser(user: AuthUser): IWebUIManagedUser {
+    const isAdmin = user.username === AUTH_CONFIG.DEFAULT_USER.USERNAME;
+    return {
+      id: user.id,
+      username: user.username,
+      role: isAdmin ? 'admin' : 'user',
+      permissions: isAdmin ? ['all'] : ['standard'],
+      createdAt: user.created_at,
+      lastLogin: user.last_login ?? null,
+    };
+  }
+
+  /**
+   * List WebUI users for admin dashboard.
+   */
+  static async listUsers(): Promise<IWebUIManagedUser[]> {
+    const users = UserRepository.listUsers().filter((user) => typeof user.password_hash === 'string' && user.password_hash.trim().length > 0);
+    return users.map((user) => this.mapManagedUser(user));
+  }
+
+  /**
+   * Create a new WebUI user and return plaintext password once.
+   */
+  static async createUser(username: string, password?: string): Promise<{ user: IWebUIManagedUser; password: string }> {
+    const normalizedUsername = username.trim();
+    const usernameValidation = AuthService.validateUsername(normalizedUsername);
+    if (!usernameValidation.isValid) {
+      throw new Error(usernameValidation.errors.join('; '));
+    }
+    if (normalizedUsername === this.SYSTEM_PLACEHOLDER_USERNAME) {
+      throw new Error(`Username "${normalizedUsername}" is reserved`);
+    }
+
+    const existingUser = UserRepository.findByUsername(normalizedUsername);
+    if (existingUser) {
+      throw new Error(`Username "${normalizedUsername}" already exists`);
+    }
+
+    const plainPassword = password?.trim() ? password.trim() : AuthService.generateRandomPassword();
+    const passwordValidation = AuthService.validatePasswordStrength(plainPassword);
+    if (!passwordValidation.isValid) {
+      throw new Error(passwordValidation.errors.join('; '));
+    }
+
+    const hashedPassword = await AuthService.hashPassword(plainPassword);
+    const created = UserRepository.createUser(normalizedUsername, hashedPassword);
+
+    return {
+      user: this.mapManagedUser(created),
+      password: plainPassword,
     };
   }
 

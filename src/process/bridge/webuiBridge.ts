@@ -206,6 +206,28 @@ export function initWebuiBridge(): void {
     }, 'Get status');
   });
 
+  // 列出 WebUI 用户 / List WebUI users
+  webui.listUsers.provider(async () => {
+    return WebuiService.handleAsync(async () => {
+      const users = await WebuiService.listUsers();
+      return {
+        success: true,
+        data: { users },
+      };
+    }, 'List users');
+  });
+
+  // 创建 WebUI 用户 / Create WebUI user
+  webui.createUser.provider(async ({ username, password }) => {
+    return WebuiService.handleAsync(async () => {
+      const created = await WebuiService.createUser(username, password);
+      return {
+        success: true,
+        data: created,
+      };
+    }, 'Create user');
+  });
+
   // 启动 WebUI / Start WebUI
   webui.start.provider(async ({ port: requestedPort, allowRemote }) => {
     try {
