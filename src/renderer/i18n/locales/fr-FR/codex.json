@@ -1,0 +1,133 @@
+{
+  "sendbox": {},
+  "network": {
+    "cloudflare_blocked": "La protection Cloudflare a bloqué l'accès à {{service}}. Suggestions : 1) Utiliser VPN 2) Changer de réseau 3) Réessayer plus tard 4) Basculer vers d'autres services d'IA",
+    "network_timeout": "Délai d'expiration du réseau, nouvelle tentative automatique de connexion...",
+    "connection_refused": "Connexion refusée, veuillez vérifier si le service Codex fonctionne correctement.",
+    "unknown_error": "Erreur de connexion réseau, veuillez vérifier les paramètres réseau.",
+    "retry_attempt": "Nouvelle tentative {{current}}...",
+    "cloudflare_blocked_title": "🚫 Service {{service}} bloqué par la protection Cloudflare",
+    "network_timeout_title": "⏱️ Délai d'expiration de la connexion réseau",
+    "connection_refused_title": "❌ Connexion au service refusée",
+    "unknown_error_title": "🔌 Erreur de connexion réseau",
+    "recovery_suggestions": "**Solutions suggérées :**",
+    "technical_info": "**Informations techniques :**",
+    "error_type": "Type d'erreur",
+    "retry_count": "Nombre de tentatives",
+    "error_details": "Détails de l'erreur",
+    "quick_switch_title": "💡 **Options de changement rapide :**",
+    "quick_switch_content": "Lorsque le service actuel rencontre des restrictions de réseau, vous pouvez :\n\n1. ** Changer immédiatement d'assistant IA ** : sélectionnez les autres assistants disponibles dans le panneau de gauche.\n2. **Vérifier l'état du service** : la disponibilité des différents services d'IA peut varier selon la région\n3. **Optimisation du réseau** : utilisez un environnement réseau stable pour améliorer le taux de réussite de la connexion\n4. **Réessayez plus tard** : les restrictions réseau sont généralement temporaires\n\n**Conseil** : Il est recommandé de configurer plusieurs services d'IA comme alternatives pour garantir la continuité du travail.",
+    "recovery_actions": {
+      "cloudflare_blocked": [
+        "• Utilisez un VPN ou un service proxy",
+        "• Changer d'environnement réseau (comme un point d'accès mobile)",
+        "• Attendez 10 à 30 minutes et réessayez",
+        "• Effacer le cache du navigateur et les cookies",
+        "• Basculez vers d'autres services disponibles : ChatGPT, Claude, Qwen, Gemini"
+      ],
+      "network_timeout": [
+        "• Vérifiez si la connexion réseau est stable",
+        "• Réessayer l'opération de connexion",
+        "• Passez à un environnement réseau plus stable",
+        "• Vérifiez les paramètres du pare-feu"
+      ],
+      "connection_refused": [
+        "• Vérifiez si Codex CLI est correctement installé.",
+        "• Vérifier la configuration du service et les clés API",
+        "• Redémarrez l'application",
+        "• Vérifiez si les ports locaux sont occupés"
+      ],
+      "unknown": [
+        "• Vérifier l'état de la connexion réseau",
+        "• Réessayer l'opération en cours",
+        "• Changer d'environnement réseau",
+        "• Contacter l'assistance technique"
+      ]
+    }
+  },
+  "thinking": {
+    "processing": "🤔 Le Codex réfléchit...",
+    "completed": "💭 Processus de réflexion terminé",
+    "analyzing": "Analyser le problème et formuler des solutions...",
+    "composing": "Rédiger le contenu de la réponse..."
+  },
+  "error": {
+    "system_init_failed": "Échec de l'initialisation du système Codex",
+    "invalid_message_format": "Format de message invalide",
+    "invalid_input": "Entrée invalide fournie",
+    "session_timeout": "La session a expiré, veuillez réessayer",
+    "permission_denied": "Autorisation refusée pour cette opération",
+    "context_error": "Une erreur s'est produite dans {{context}}, veuillez actualiser ou réessayer.",
+    "generic": "Le composant Codex a rencontré une exception. Veuillez réessayer plus tard.",
+    "troubleshooting": "Suggestions de dépannage",
+    "suggestion_1": "Vérifiez si la connexion réseau est stable",
+    "suggestion_2": "Assurez-vous que le service Codex fonctionne correctement",
+    "suggestion_3": "Essayez de redémarrer l'application",
+    "suggestion_4": "Effacer le cache du navigateur et le stockage local"
+  },
+  "performance": {
+    "virtualization_enabled": "La virtualisation de liste est activée pour de meilleures performances",
+    "virtualization_disabled": "La virtualisation de liste est désactivée, affichant tous les éléments",
+    "debounce_enabled": "L'anti-rebond d'entrée est activé (délai {{delay}}ms)",
+    "debounce_disabled": "L'anti-rebond d'entrée est désactivé"
+  },
+  "config": {
+    "loaded": "Configuration chargée avec succès",
+    "updated": "Configuration mise à jour avec succès",
+    "reset": "Configuration réinitialisée aux valeurs par défaut",
+    "validation_failed": "La validation de la configuration a échoué",
+    "import_success": "Configuration importée avec succès",
+    "import_failed": "Échec de l'importation de la configuration",
+    "export_success": "Configuration exportée avec succès"
+  },
+  "permissions": {
+    "allow_once": "Autoriser une fois",
+    "allow_always": "Autoriser toujours",
+    "reject_once": "Rejeter une fois",
+    "reject_always": "Rejeter toujours",
+    "allow_once_desc": "Accorder l'autorisation pour cette demande uniquement",
+    "allow_always_desc": "Accordez toujours l’autorisation pour des demandes similaires",
+    "reject_once_desc": "Rejeter cette demande uniquement",
+    "reject_always_desc": "Rejetez toujours les demandes similaires",
+    "processing": "Traitement...",
+    "response_sent": "Réponse envoyée avec succès",
+    "choose_action": "Choisissez une action :",
+    "titles": {
+      "exec_approval_request": "Autorisation d'exécution de la commande",
+      "apply_patch_approval_request": "Appliquer l'autorisation de modification de fichier",
+      "command_execution": "Autorisation d'exécution de commande",
+      "file_write": "Autorisation d'écriture de fichier",
+      "file_read": "Autorisation de lecture de fichier"
+    },
+    "labels": {
+      "command": "Commande:",
+      "directory": "Annuaire:",
+      "reason": "Raison:",
+      "files_to_modify": "Fichiers à modifier",
+      "summary": "Résumé:"
+    },
+    "descriptions": {
+      "command_execution": "Requêtes du Codex pour exécuter des commandes système",
+      "file_write": "Demandes du Codex pour modifier ou créer des fichiers",
+      "file_read": "Demandes du Codex pour lire le contenu du fichier"
+    },
+    "command_execution": {
+      "allow_once_desc": "Autoriser l'exécution de cette commande uniquement",
+      "allow_always_desc": "Toujours autoriser toutes les demandes d'exécution de commandes",
+      "reject_once_desc": "Rejeter cette exécution de commande uniquement",
+      "reject_always_desc": "Rejetez toujours toutes les demandes d’exécution de commandes"
+    },
+    "file_write": {
+      "allow_once_desc": "Autoriser ce fichier en écriture seule",
+      "allow_always_desc": "Toujours autoriser toutes les demandes d'écriture de fichiers",
+      "reject_once_desc": "Rejeter ce fichier en écriture seule",
+      "reject_always_desc": "Rejetez toujours toutes les demandes d'écriture de fichiers"
+    },
+    "file_read": {
+      "allow_once_desc": "Autoriser ce fichier en lecture seule",
+      "allow_always_desc": "Autorisez toujours toutes les demandes de lecture de fichiers",
+      "reject_once_desc": "Rejeter ce fichier en lecture seule",
+      "reject_always_desc": "Rejetez toujours toutes les demandes de lecture de fichiers"
+    }
+  }
+}

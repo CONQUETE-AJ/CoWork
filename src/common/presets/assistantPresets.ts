@@ -30,20 +30,20 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/openclaw-setup',
     ruleFiles: {
       'en-US': 'openclaw-setup.md',
-      'zh-CN': 'openclaw-setup.zh-CN.md',
+      'fr-FR': 'openclaw-setup.md',
     },
     defaultEnabledSkills: ['openclaw-setup', 'aionui-webui-setup'],
     nameI18n: {
       'en-US': 'OpenClaw Setup Expert',
-      'zh-CN': 'OpenClaw 部署专家',
+      'fr-FR': "Expert d'installation OpenClaw",
     },
     descriptionI18n: {
       'en-US': 'Expert guide for installing, deploying, configuring, and troubleshooting OpenClaw. Proactively helps with setup, diagnoses issues, and provides security best practices.',
-      'zh-CN': 'OpenClaw 安装、部署、配置和故障排查专家。主动协助设置、诊断问题并提供安全最佳实践。',
+      'fr-FR': "Guide expert pour installer, déployer, configurer et dépanner OpenClaw. Aide proactive à l'installation, diagnostic des problèmes et bonnes pratiques de sécurité.",
     },
     promptsI18n: {
       'en-US': ['Help me install OpenClaw step by step', "My OpenClaw isn't working, please diagnose the issue", 'Configure Telegram channel for OpenClaw integration'],
-      'zh-CN': ['帮我一步步安装 OpenClaw', '我的 OpenClaw 出问题了，请帮我诊断', '为 OpenClaw 配置 Telegram 渠道'],
+      'fr-FR': ["Aide-moi à installer OpenClaw étape par étape", "Mon OpenClaw ne fonctionne pas, peux-tu diagnostiquer le problème ?", "Configurer le canal Telegram pour l'intégration OpenClaw"],
     },
   },
   {
@@ -53,24 +53,24 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/cowork',
     ruleFiles: {
       'en-US': 'cowork.md',
-      'zh-CN': 'cowork.md', // 使用同一个文件，内容已精简 / Use same file, content is simplified
+      'fr-FR': 'cowork.md', // 使用同一个文件，内容已精简 / Use same file, content is simplified
     },
     skillFiles: {
       'en-US': 'cowork-skills.md',
-      'zh-CN': 'cowork-skills.zh-CN.md',
+      'fr-FR': 'cowork-skills.md',
     },
     defaultEnabledSkills: ['skill-creator', 'pptx', 'docx', 'pdf', 'xlsx'],
     nameI18n: {
       'en-US': 'Cowork',
-      'zh-CN': 'Cowork',
+      'fr-FR': 'Cowork',
     },
     descriptionI18n: {
       'en-US': 'Autonomous task execution with file operations, document processing, and multi-step workflow planning.',
-      'zh-CN': '具有文件操作、文档处理和多步骤工作流规划的自主任务执行助手。',
+      'fr-FR': "Exécution autonome des tâches avec opérations sur les fichiers, traitement de documents et planification de workflows en plusieurs étapes.",
     },
     promptsI18n: {
       'en-US': ['Analyze the current project structure and suggest improvements', 'Automate the build and deployment process', 'Extract and summarize key information from all PDF files'],
-      'zh-CN': ['分析当前项目结构并建议改进方案', '自动化构建和部署流程', '提取并总结所有 PDF 文件的关键信息'],
+      'fr-FR': ["Analyser la structure actuelle du projet et proposer des améliorations", "Automatiser le processus de build et de déploiement", "Extraire et résumer les informations clés de tous les fichiers PDF"],
     },
   },
   {
@@ -80,19 +80,19 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/pptx-generator',
     ruleFiles: {
       'en-US': 'pptx-generator.md',
-      'zh-CN': 'pptx-generator.zh-CN.md',
+      'fr-FR': 'pptx-generator.md',
     },
     nameI18n: {
       'en-US': 'PPTX Generator',
-      'zh-CN': 'PPTX 生成器',
+      'fr-FR': 'Générateur PPTX',
     },
     descriptionI18n: {
       'en-US': 'Generate local PPTX assets and structure for pptxgenjs.',
-      'zh-CN': '生成本地 PPTX 资产与结构（pptxgenjs）。',
+      'fr-FR': 'Génère des ressources et une structure PPTX locales pour pptxgenjs.',
     },
     promptsI18n: {
       'en-US': ['Create a professional slide deck about AI trends with 10 slides', 'Generate a quarterly business report presentation', 'Make a product launch presentation with visual elements'],
-      'zh-CN': ['创建一个包含 10 页的专业 AI 趋势幻灯片', '生成季度业务报告演示文稿', '制作包含视觉元素的产品发布演示'],
+      'fr-FR': ["Créer un deck professionnel de 10 slides sur les tendances IA", "Générer une présentation de rapport trimestriel", "Créer une présentation de lancement produit avec des éléments visuels"],
     },
   },
   {
@@ -102,19 +102,19 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/pdf-to-ppt',
     ruleFiles: {
       'en-US': 'pdf-to-ppt.md',
-      'zh-CN': 'pdf-to-ppt.zh-CN.md',
+      'fr-FR': 'pdf-to-ppt.md',
     },
     nameI18n: {
       'en-US': 'PDF to PPT',
-      'zh-CN': 'PDF 转 PPT',
+      'fr-FR': 'PDF to PPT',
     },
     descriptionI18n: {
       'en-US': 'Convert PDF to PPT with watermark removal rules.',
-      'zh-CN': 'PDF 转 PPT 并去除水印规则',
+      'fr-FR': 'Convertit un PDF en PPT avec des règles de suppression de filigrane.',
     },
     promptsI18n: {
       'en-US': ['Convert report.pdf to a PowerPoint presentation', 'Extract all charts and diagrams from whitepaper.pdf', 'Transform this PDF document into slides with proper formatting'],
-      'zh-CN': ['将 report.pdf 转换为 PowerPoint 演示文稿', '从白皮书提取所有图表和示意图', '将此 PDF 文档转换为格式正确的幻灯片'],
+      'fr-FR': ["Convertir report.pdf en présentation PowerPoint", "Extraire tous les graphiques et schémas de whitepaper.pdf", "Transformer ce document PDF en slides bien formatées"],
     },
   },
   {
@@ -124,19 +124,19 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/game-3d',
     ruleFiles: {
       'en-US': 'game-3d.md',
-      'zh-CN': 'game-3d.zh-CN.md',
+      'fr-FR': 'game-3d.md',
     },
     nameI18n: {
       'en-US': '3D Game',
-      'zh-CN': '3D 游戏生成',
+      'fr-FR': 'Jeu 3D',
     },
     descriptionI18n: {
       'en-US': 'Generate a complete 3D platform collection game in one HTML file.',
-      'zh-CN': '用单个 HTML 文件生成完整的 3D 平台收集游戏。',
+      'fr-FR': 'Génère un jeu 3D de plateforme/collecte complet dans un seul fichier HTML.',
     },
     promptsI18n: {
       'en-US': ['Create a 3D platformer game with jumping mechanics', 'Make a coin collection game with obstacles', 'Build a 3D maze exploration game'],
-      'zh-CN': ['创建一个带跳跃机制的 3D 平台游戏', '制作一个带障碍物的金币收集游戏', '构建一个 3D 迷宫探索游戏'],
+      'fr-FR': ["Créer un jeu de plateforme 3D avec mécanique de saut", "Créer un jeu de collecte de pièces avec obstacles", "Construire un jeu d'exploration de labyrinthe 3D"],
     },
   },
   {
@@ -146,19 +146,19 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/ui-ux-pro-max',
     ruleFiles: {
       'en-US': 'ui-ux-pro-max.md',
-      'zh-CN': 'ui-ux-pro-max.zh-CN.md',
+      'fr-FR': 'ui-ux-pro-max.md',
     },
     nameI18n: {
       'en-US': 'UI/UX Pro Max',
-      'zh-CN': 'UI/UX 专业设计师',
+      'fr-FR': 'UI/UX Pro Max',
     },
     descriptionI18n: {
       'en-US': 'Professional UI/UX design intelligence with 57 styles, 95 color palettes, 56 font pairings, and stack-specific best practices.',
-      'zh-CN': '专业 UI/UX 设计智能助手，包含 57 种风格、95 个配色方案、56 个字体配对及技术栈最佳实践。',
+      'fr-FR': "Assistant UI/UX professionnel avec 57 styles, 95 palettes de couleurs, 56 associations de polices et des bonnes pratiques par stack.",
     },
     promptsI18n: {
       'en-US': ['Design a modern login page for a fintech mobile app', 'Create a color palette for a nature-themed website', 'Design a dashboard interface for a SaaS product'],
-      'zh-CN': ['为金融科技移动应用设计现代登录页', '创建自然主题网站的配色方案', '为 SaaS 产品设计仪表板界面'],
+      'fr-FR': ["Concevoir une page de connexion moderne pour une app fintech mobile", "Créer une palette de couleurs pour un site sur le thème de la nature", "Concevoir une interface de dashboard pour un produit SaaS"],
     },
   },
   {
@@ -168,19 +168,19 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/planning-with-files',
     ruleFiles: {
       'en-US': 'planning-with-files.md',
-      'zh-CN': 'planning-with-files.zh-CN.md',
+      'fr-FR': 'planning-with-files.md',
     },
     nameI18n: {
       'en-US': 'Planning with Files',
-      'zh-CN': '文件规划助手',
+      'fr-FR': 'Planification avec fichiers',
     },
     descriptionI18n: {
       'en-US': 'Manus-style file-based planning for complex tasks. Uses task_plan.md, findings.md, and progress.md to maintain persistent context.',
-      'zh-CN': 'Manus 风格的文件规划，用于复杂任务。使用 task_plan.md、findings.md 和 progress.md 维护持久化上下文。',
+      'fr-FR': 'Planification basée sur des fichiers (style Manus) pour des tâches complexes. Utilise task_plan.md, findings.md et progress.md pour conserver le contexte.',
     },
     promptsI18n: {
       'en-US': ['Plan a comprehensive refactoring task with milestones', 'Break down the feature implementation into actionable steps', 'Create a project plan for migrating to a new framework'],
-      'zh-CN': ['规划一个包含里程碑的全面重构任务', '将功能实现拆分为可执行的步骤', '创建迁移到新框架的项目计划'],
+      'fr-FR': ["Planifier une refonte complète avec des jalons", "Découper l'implémentation d'une fonctionnalité en étapes actionnables", "Créer un plan de migration vers un nouveau framework"],
     },
   },
   {
@@ -190,19 +190,19 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/human-3-coach',
     ruleFiles: {
       'en-US': 'human-3-coach.md',
-      'zh-CN': 'human-3-coach.zh-CN.md',
+      'fr-FR': 'human-3-coach.md',
     },
     nameI18n: {
       'en-US': 'HUMAN 3.0 Coach',
-      'zh-CN': 'HUMAN 3.0 教练',
+      'fr-FR': 'Coach HUMAN 3.0',
     },
     descriptionI18n: {
       'en-US': 'Personal development coach based on HUMAN 3.0 framework: 4 Quadrants (Mind/Body/Spirit/Vocation), 3 Levels, 3 Growth Phases.',
-      'zh-CN': '基于 HUMAN 3.0 框架的个人发展教练：4 象限（思维/身体/精神/职业）、3 层次、3 成长阶段。',
+      'fr-FR': 'Coach de développement personnel basé sur le framework HUMAN 3.0 : 4 quadrants (esprit/corps/spiritualité/vocation), 3 niveaux et 3 phases de croissance.',
     },
     promptsI18n: {
       'en-US': ['Help me set quarterly goals across all life quadrants', 'Reflect on my career progress and plan next steps', 'Create a personal development plan for the next 3 months'],
-      'zh-CN': ['帮我设定涵盖所有生活象限的季度目标', '反思我的职业发展进度并规划下一步', '为未来 3 个月创建个人发展计划'],
+      'fr-FR': ["Aide-moi à définir des objectifs trimestriels sur tous les axes de vie", "Aide-moi à faire le point sur ma progression de carrière et à planifier la suite", "Créer un plan de développement personnel pour les 3 prochains mois"],
     },
   },
   {
@@ -212,24 +212,24 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/social-job-publisher',
     ruleFiles: {
       'en-US': 'social-job-publisher.md',
-      'zh-CN': 'social-job-publisher.zh-CN.md',
+      'fr-FR': 'social-job-publisher.md',
     },
     skillFiles: {
       'en-US': 'social-job-publisher-skills.md',
-      'zh-CN': 'social-job-publisher-skills.zh-CN.md',
+      'fr-FR': 'social-job-publisher-skills.md',
     },
     defaultEnabledSkills: ['xiaohongshu-recruiter', 'x-recruiter'],
     nameI18n: {
       'en-US': 'Social Job Publisher',
-      'zh-CN': '社交招聘发布助手',
+      'fr-FR': "Publication d'offres sociales",
     },
     descriptionI18n: {
       'en-US': 'Expand hiring requests into a full JD, images, and publish to social platforms via connectors.',
-      'zh-CN': '扩写招聘需求为完整 JD 与图片，并通过 connector 发布到社交平台。',
+      'fr-FR': "Transforme une demande de recrutement en fiche de poste complète, visuels et publication sur les réseaux via connecteurs.",
     },
     promptsI18n: {
       'en-US': ['Create a comprehensive job post for Senior Full-Stack Engineer', 'Draft an engaging hiring tweet for social media', 'Create a multi-platform job posting (LinkedIn, X, Redbook)'],
-      'zh-CN': ['创建一份高级全栈工程师的完整招聘启事', '起草一条适合社交媒体的招聘推文', '创建多平台职位发布（LinkedIn、X、小红书）'],
+      'fr-FR': ["Créer une offre complète pour un poste d'ingénieur full-stack senior", "Rédiger un post de recrutement engageant pour les réseaux", "Créer une publication multi-plateformes (LinkedIn, X, Redbook)"],
     },
   },
   {
@@ -239,24 +239,24 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/moltbook',
     ruleFiles: {
       'en-US': 'moltbook.md',
-      'zh-CN': 'moltbook.md',
+      'fr-FR': 'moltbook.md',
     },
     skillFiles: {
       'en-US': 'moltbook-skills.md',
-      'zh-CN': 'moltbook-skills.zh-CN.md',
+      'fr-FR': 'moltbook-skills.md',
     },
     defaultEnabledSkills: ['moltbook'],
     nameI18n: {
       'en-US': 'moltbook',
-      'zh-CN': 'moltbook',
+      'fr-FR': 'moltbook',
     },
     descriptionI18n: {
       'en-US': 'The social network for AI agents. Post, comment, upvote, and create communities.',
-      'zh-CN': 'AI 代理的社交网络。发帖、评论、投票、创建社区。',
+      'fr-FR': "Le réseau social pour agents IA : publier, commenter, voter et créer des communautés.",
     },
     promptsI18n: {
       'en-US': ['Check my moltbook feed for latest updates', 'Post an interesting update to moltbook', 'Check for new direct messages'],
-      'zh-CN': ['查看我的 moltbook 最新动态', '在 moltbook 发布一条有趣的动态', '检查是否有新私信'],
+      'fr-FR': ["Vérifier mon flux moltbook pour les dernières nouveautés", "Publier une mise à jour intéressante sur moltbook", "Vérifier s'il y a de nouveaux messages privés"],
     },
   },
   {
@@ -266,20 +266,20 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/beautiful-mermaid',
     ruleFiles: {
       'en-US': 'beautiful-mermaid.md',
-      'zh-CN': 'beautiful-mermaid.zh-CN.md',
+      'fr-FR': 'beautiful-mermaid.md',
     },
     defaultEnabledSkills: ['mermaid'],
     nameI18n: {
       'en-US': 'Beautiful Mermaid',
-      'zh-CN': 'Beautiful Mermaid',
+      'fr-FR': 'Mermaid élégant',
     },
     descriptionI18n: {
       'en-US': 'Create flowcharts, sequence diagrams, state diagrams, class diagrams, and ER diagrams with beautiful themes.',
-      'zh-CN': '创建流程图、时序图、状态图、类图和 ER 图，支持多种精美主题。',
+      'fr-FR': 'Crée des organigrammes, diagrammes de séquence, diagrammes d’état, de classes et ER avec des thèmes soignés.',
     },
     promptsI18n: {
       'en-US': ['Draw a detailed user login authentication flowchart', 'Create an API sequence diagram for payment processing', 'Create a system architecture diagram'],
-      'zh-CN': ['绘制详细的用户登录认证流程图', '创建支付处理的 API 时序图', '创建系统架构图'],
+      'fr-FR': ["Dessiner un organigramme détaillé du flux d'authentification utilisateur", "Créer un diagramme de séquence API pour le traitement des paiements", "Créer un diagramme d'architecture système"],
     },
   },
   {
@@ -289,20 +289,20 @@ export const ASSISTANT_PRESETS: AssistantPreset[] = [
     resourceDir: 'assistant/story-roleplay',
     ruleFiles: {
       'en-US': 'story-roleplay.md',
-      'zh-CN': 'story-roleplay.zh-CN.md',
+      'fr-FR': 'story-roleplay.md',
     },
     defaultEnabledSkills: ['story-roleplay'],
     nameI18n: {
       'en-US': 'Story Roleplay',
-      'zh-CN': '故事角色扮演',
+      'fr-FR': 'Jeu de rôle narratif',
     },
     descriptionI18n: {
       'en-US': 'Immersive story roleplay. Start by: 1) Natural language to create characters, 2) Paste PNG images, or 3) Open folder with character cards (PNG/JSON) and world info.',
-      'zh-CN': '沉浸式故事角色扮演。三种开始方式：1) 自然语言直接对话创建角色，2) 直接粘贴PNG图片，3) 打开包含角色卡（PNG/JSON）和世界书的文件夹。',
+      'fr-FR': "Jeu de rôle narratif immersif. Démarrez en : 1) langage naturel pour créer des personnages, 2) collage d'images PNG, 3) ouverture d'un dossier avec fiches personnages (PNG/JSON) et infos d'univers.",
     },
     promptsI18n: {
       'en-US': ['Start an epic fantasy adventure with a brave warrior', 'Create a detailed character with backstory and personality', 'Begin an interactive story in a sci-fi setting'],
-      'zh-CN': ['开始一个勇敢战士的史诗奇幻冒险', '创建一个有背景故事和个性的详细角色', '在科幻设定中开始一个互动故事'],
+      'fr-FR': ["Commencer une aventure fantasy épique avec un guerrier courageux", "Créer un personnage détaillé avec histoire et personnalité", "Démarrer une histoire interactive dans un univers de science-fiction"],
     },
   },
 ];

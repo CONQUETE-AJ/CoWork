@@ -1,0 +1,15 @@
+{
+  "plan": "Mode Planification",
+  "default": "Défaut",
+  "acceptEdits": "Accepter les modifications",
+  "autoEdit": "Modification automatique",
+  "yolo": "YOLO",
+  "bypass": "Contournement (YOLO)",
+  "bypassPermissions": "YOLO",
+  "smart": "Intelligent",
+  "build": "Mode construction",
+  "permission": "Autorisation",
+  "switchMode": "Mode de commutation",
+  "switchSuccess": "Le mode a changé avec succès",
+  "switchFailed": "Échec du changement de mode"
+}

@@ -11,11 +11,7 @@ import { DEFAULT_LANGUAGE, normalizeLanguageCode, mergeWithFallback, ensureAndSw
 // Static imports – Vite bundles these into the main-process output so they
 // work correctly in both development and production (no fs.readFile needed).
 import enUS from '@renderer/i18n/locales/en-US/index';
-import zhCN from '@renderer/i18n/locales/zh-CN/index';
-import jaJP from '@renderer/i18n/locales/ja-JP/index';
-import zhTW from '@renderer/i18n/locales/zh-TW/index';
-import koKR from '@renderer/i18n/locales/ko-KR/index';
-import trTR from '@renderer/i18n/locales/tr-TR/index';
+import frFR from '@renderer/i18n/locales/fr-FR/index';
 
 // All locale data keyed by language code.
 // NOTE: When adding a new language, add a static import above and an entry here.
@@ -23,11 +19,7 @@ import trTR from '@renderer/i18n/locales/tr-TR/index';
 // by Vite and the JSON files won't exist on disk in production.
 const localeData: LocaleData = {
   'en-US': enUS,
-  'zh-CN': zhCN,
-  'ja-JP': jaJP,
-  'zh-TW': zhTW,
-  'ko-KR': koKR,
-  'tr-TR': trTR,
+  'fr-FR': frFR,
 };
 
 const fallbackData = localeData[DEFAULT_LANGUAGE] ?? {};

@@ -113,7 +113,7 @@ async function readBuiltinResource(resourceType: ResourceType, fileName: string)
  */
 async function readAssistantResource(resourceType: ResourceType, assistantId: string, locale: string, fileNamePattern: (id: string, loc: string) => string): Promise<string> {
   const assistantsDir = getAssistantsDir();
-  const locales = [locale, 'en-US', 'zh-CN'].filter((l, i, arr) => arr.indexOf(l) === i);
+  const locales = [locale, 'fr-FR', 'en-US'].filter((l, i, arr) => arr.indexOf(l) === i);
 
   // 1. Try user data directory first
   for (const loc of locales) {
