@@ -5,6 +5,7 @@
  */
 
 import { ipcBridge } from '@/common';
+import { isElectronDesktop } from '@/renderer/utils/platform';
 import { useCallback, useEffect, useState } from 'react';
 
 const UI_SCALE_DEFAULT = 1;
@@ -16,6 +17,7 @@ export const FONT_SCALE_DEFAULT = UI_SCALE_DEFAULT;
 export const FONT_SCALE_MIN = UI_SCALE_MIN;
 export const FONT_SCALE_MAX = UI_SCALE_MAX;
 export const FONT_SCALE_STEP = UI_SCALE_STEP;
+const WEBUI_ZOOM_STORAGE_KEY = 'aionui.webui.zoomFactor';
 
 // 确保缩放值在允许范围内 / Clamp UI scale to allowed range
 const clampFontScale = (value: number) => {
@@ -25,41 +27,54 @@ const clampFontScale = (value: number) => {
   return Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, value));
 };
 
+const resetWebZoom = () => {
+  if (typeof document === 'undefined') return;
+  // Keep WebUI at 100% to avoid popup/dropdown positioning drift.
+  document.documentElement.style.zoom = '';
+  if (typeof window !== 'undefined') {
+    window.localStorage.removeItem(WEBUI_ZOOM_STORAGE_KEY);
+  }
+};
+
 const useFontScale = (): [number, (scale: number) => Promise<void>] => {
   const [fontScale, setFontScaleState] = useState(FONT_SCALE_DEFAULT);
+  const isElectron = isElectronDesktop();
 
-  // 从主进程读取当前缩放，保持 UI 与 Electron 同步 / Pull zoom factor from main to keep UI state aligned
-  const fetchZoomFactor = useCallback(async () => {
-    try {
-      const currentFactor = await ipcBridge.application.getZoomFactor.invoke();
-      if (typeof currentFactor === 'number') {
-        setFontScaleState(clampFontScale(currentFactor));
-      }
-    } catch (error) {
-      console.error('Failed to fetch zoom factor:', error);
+  // Font scale is intentionally fixed at 100% to keep popup positioning stable.
+  const syncDefaultScale = useCallback(async () => {
+    setFontScaleState(FONT_SCALE_DEFAULT);
+    if (!isElectron) {
+      resetWebZoom();
+      return;
     }
-  }, []);
+
+    try {
+      await ipcBridge.application.setZoomFactor.invoke({ factor: FONT_SCALE_DEFAULT });
+    } catch (error) {
+      console.error('Failed to reset zoom factor:', error);
+    }
+  }, [isElectron]);
 
   useEffect(() => {
-    void fetchZoomFactor();
-  }, [fetchZoomFactor]);
+    void syncDefaultScale();
+  }, [syncDefaultScale]);
 
-  // 乐观更新 slider，同时通知主进程写入 zoom / Optimistically update slider and ask main process to persist zoom
+  // Keep no-op setter for compatibility with ThemeContext API.
   const setFontScale = useCallback(
-    async (nextScale: number) => {
-      const clamped = clampFontScale(nextScale);
-      setFontScaleState(clamped);
+    async (_nextScale: number) => {
+      setFontScaleState(FONT_SCALE_DEFAULT);
+      if (!isElectron) {
+        resetWebZoom();
+        return;
+      }
+
       try {
-        const updatedFactor = await ipcBridge.application.setZoomFactor.invoke({ factor: clamped });
-        if (typeof updatedFactor === 'number' && updatedFactor !== clamped) {
-          setFontScaleState(clampFontScale(updatedFactor));
-        }
+        await ipcBridge.application.setZoomFactor.invoke({ factor: FONT_SCALE_DEFAULT });
       } catch (error) {
-        console.error('Failed to set zoom factor:', error);
-        void fetchZoomFactor();
+        console.error('Failed to reset zoom factor:', error);
       }
     },
-    [fetchZoomFactor]
+    [isElectron]
   );
 
   return [fontScale, setFontScale];

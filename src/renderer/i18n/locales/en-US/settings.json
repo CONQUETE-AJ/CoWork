@@ -374,7 +374,7 @@
   "channels.guide": "Connect Telegram, Lark, DingTalk and more to control your always-on AionUi AI agent from any chat app.",
   "channels.selectFirst": "Select a channel and configure credentials.",
   "channels.enableAfterConfig": "Enable the channel and start chatting with your AI agent.",
-  "display": "Display",
+  "display": "General",
   "imageGeneration": "Image Generation",
   "imageGenerationToggle": "Enable image generation tool",
   "imageGenerationDescription": "Choose which configured image-capable model the tool should use by default.",

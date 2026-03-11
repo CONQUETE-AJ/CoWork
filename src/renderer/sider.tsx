@@ -53,7 +53,7 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
     cleanupSiderTooltips();
     blurActiveElement();
     if (key === 'settings') {
-      Promise.resolve(navigate('/settings/gemini')).catch((error) => {
+      Promise.resolve(navigate('/settings/display')).catch((error) => {
         console.error('Navigation failed:', error);
       });
       if (onSessionClick) {
