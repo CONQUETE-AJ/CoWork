@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/renderer/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/renderer/components/ThemeSwitcher';
 import AionScrollArea from '@/renderer/components/base/AionScrollArea';
 import { useSettingsViewMode } from '../settingsViewContext';
@@ -34,6 +35,7 @@ const PreferenceRow: React.FC<{
  *
  * @features
  * - 主题切换：亮色/暗色/跟随系统 / Theme: light/dark/system
+ * - 语言切换：法语/英语 / Language: French/English
  */
 const DisplayModalContent: React.FC = () => {
   const { t } = useTranslation();
@@ -41,7 +43,10 @@ const DisplayModalContent: React.FC = () => {
   const isPageMode = viewMode === 'page';
 
   // 显示设置项配置 / Display items configuration
-  const displayItems = [{ key: 'theme', label: t('settings.theme'), component: <ThemeSwitcher /> }];
+  const displayItems = [
+    { key: 'theme', label: t('settings.theme'), component: <ThemeSwitcher /> },
+    { key: 'language', label: t('settings.language'), component: <LanguageSwitcher /> },
+  ];
 
   return (
     <div className='flex flex-col h-full w-full'>

@@ -5,7 +5,6 @@
  */
 
 import { ipcBridge } from '@/common';
-import LanguageSwitcher from '@/renderer/components/LanguageSwitcher';
 import { iconColors } from '@/renderer/theme/colors';
 import { Alert, Button, Form, Modal, Switch, Tooltip } from '@arco-design/web-react';
 import { FolderOpen } from '@icon-park/react';
@@ -87,11 +86,10 @@ const PreferenceRow: React.FC<{
 /**
  * 系统设置内容组件 / System settings content component
  *
- * 提供系统级配置选项，包括语言和目录配置
- * Provides system-level configuration options including language and directory config
+ * 提供系统级配置选项，包括目录和系统行为配置
+ * Provides system-level configuration options including directory and system behavior settings
  *
  * @features
- * - 语言设置 / Language setting
  * - 高级设置：缓存目录、工作目录配置 / Advanced: cache directory, work directory configuration
  * - 配置变更自动保存 / Auto-save on configuration changes
  */
@@ -141,10 +139,7 @@ const SystemModalContent: React.FC = () => {
   }, [systemInfo, form]);
 
   // 偏好设置项配置 / Preference items configuration
-  const preferenceItems = [
-    { key: 'language', label: t('settings.language'), component: <LanguageSwitcher /> },
-    { key: 'closeToTray', label: t('settings.closeToTray'), component: <Switch checked={closeToTray} onChange={handleCloseToTrayChange} /> },
-  ];
+  const preferenceItems = [{ key: 'closeToTray', label: t('settings.closeToTray'), component: <Switch checked={closeToTray} onChange={handleCloseToTrayChange} /> }];
 
   // 目录配置保存确认 / Directory configuration save confirmation
   const saveDirConfigValidate = (_values: { cacheDir: string; workDir: string }): Promise<unknown> => {
