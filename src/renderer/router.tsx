@@ -42,7 +42,7 @@ const ProtectedLayout: React.FC<{ layout: React.ReactElement }> = ({ layout }) =
 const AdminOnlyRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
   const { user } = useAuth();
   if (!hasAdminAccess(user?.username)) {
-    return <Navigate to='/settings/gemini' replace />;
+    return <Navigate to='/settings/display' replace />;
   }
   return element;
 };
@@ -68,7 +68,7 @@ const PanelRoute: React.FC<{ layout: React.ReactElement }> = ({ layout }) => {
           <Route path='/settings/about' element={withRouteFallback(About)} />
           <Route path='/settings/tools' element={withRouteFallback(ToolsSettings)} />
           <Route path='/settings/ext/:tabId' element={withRouteFallback(ExtensionSettingsPage)} />
-          <Route path='/settings' element={<Navigate to='/settings/gemini' replace />} />
+          <Route path='/settings' element={<Navigate to='/settings/display' replace />} />
           <Route path='/test/components' element={withRouteFallback(ComponentsShowcase)} />
         </Route>
         <Route path='*' element={<Navigate to={status === 'authenticated' ? '/guid' : '/login'} replace />} />
