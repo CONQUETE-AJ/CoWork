@@ -1,7 +1,7 @@
-import { ListCheckbox, Plus } from '@icon-park/react';
+import { Plus } from '@icon-park/react';
 import { IconLeft, IconPoweroff, IconSettings, IconUser } from '@arco-design/web-react/icon';
 import classNames from 'classnames';
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { iconColors } from './theme/colors';
@@ -29,7 +29,6 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
   const navigate = useNavigate();
   const { closePreview } = usePreviewContext();
   const { user, logout } = useAuth();
-  const [isBatchMode, setIsBatchMode] = useState(false);
   const isSettings = pathname.startsWith('/settings');
   const profileDisplayName = user?.username || t('common.profile');
   const lastNonSettingsPathRef = useRef('/guid');
@@ -40,9 +39,6 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
     }
   }, [hash, pathname, search]);
 
-  const handleToggleBatchMode = () => {
-    setIsBatchMode((prev) => !prev);
-  };
   const handleBackToChat = () => {
     cleanupSiderTooltips();
     blurActiveElement();
@@ -80,8 +76,7 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
     collapsed,
     tooltipEnabled: collapsed && !isMobile,
     onSessionClick,
-    batchMode: isBatchMode,
-    onBatchModeChange: setIsBatchMode,
+    batchMode: false,
   };
   const tooltipEnabled = collapsed && !isMobile;
   const siderTooltipProps = getSiderTooltipProps(tooltipEnabled);
@@ -104,7 +99,6 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
                     cleanupSiderTooltips();
                     blurActiveElement();
                     closePreview();
-                    setIsBatchMode(false);
                     Promise.resolve(navigate('/guid')).catch((error) => {
                       console.error('Navigation failed:', error);
                     });
@@ -116,17 +110,6 @@ const Sider: React.FC<SiderProps> = ({ onSessionClick, collapsed = false }) => {
                 >
                   <Plus theme='outline' size='24' fill={iconColors.primary} className='block leading-none shrink-0' style={{ lineHeight: 0 }} />
                   <span className='collapsed-hidden font-bold text-t-primary leading-24px'>{t('conversation.welcome.newConversation')}</span>
-                </div>
-              </Tooltip>
-              <Tooltip {...siderTooltipProps} content={isBatchMode ? t('conversation.history.batchModeExit') : t('conversation.history.batchManage')} position='right'>
-                <div
-                  className={classNames('h-40px w-40px rd-0.5rem flex items-center justify-center cursor-pointer shrink-0 transition-all border border-solid border-transparent', isMobile && 'sider-action-icon-btn-mobile', {
-                    'hover:bg-fill-2 hover:border-[var(--color-border-2)]': !isBatchMode,
-                    'bg-[rgba(var(--primary-6),0.12)] border-[rgba(var(--primary-6),0.24)] text-primary': isBatchMode,
-                  })}
-                  onClick={handleToggleBatchMode}
-                >
-                  <ListCheckbox theme='outline' size='20' className='block leading-none shrink-0' style={{ lineHeight: 0 }} />
                 </div>
               </Tooltip>
             </div>
